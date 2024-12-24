@@ -8,7 +8,7 @@ function buildServer() {
   return fastify()
     .decorate('pg', { query: sinon.stub() })
     .decorate('jwt', { sign: sinon.stub() })
-    .register(import('../../routes/login.js'))
+    .register(import('../../routes/login.ts'))
 }
 
 test('POST /login', async t => {

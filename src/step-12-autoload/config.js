@@ -6,7 +6,7 @@ const schema = S.object()
   .prop('JWT_SECRET', S.string().required())
   .prop('LOG_LEVEL', S.string().default('info'))
   .prop('PRETTY_PRINT', S.string().default(true))
-
+  .prop('PG_CONNECTION_STRING', S.string().required())
 export default envSchema({
   schema,
   dotenv: { path: join(import.meta.url, '.env') },

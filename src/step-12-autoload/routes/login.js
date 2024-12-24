@@ -1,5 +1,6 @@
 import errors from 'http-errors'
 import S from 'fluent-json-schema'
+import SQL from '@nearform/sql'
 
 const schema = {
   body: S.object()
@@ -18,6 +19,13 @@ export default async function login(fastify) {
     if (username !== password) {
       throw errors.Unauthorized()
     }
+
+    const { rows } = await fastify.pg.query(
+      SQL`SELECT id, username FROM users WHERE username = ${username}`,
+    )
+
+    const user = rows[0]
+    if (!user) throw errors.Unauthorized()
 
     return { token: fastify.jwt.sign({ username }) }
   })
