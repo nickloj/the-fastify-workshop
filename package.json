@@ -1,6 +1,7 @@
 {
   "name": "the-fastify-workshop",
   "private": true,
+  "type": "module",
   "workspaces": [
     "src/*"
   ],

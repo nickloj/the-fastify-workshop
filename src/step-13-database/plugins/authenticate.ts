@@ -1,10 +1,11 @@
 import {
   FastifyInstance,
   FastifyPluginOptions,
-  FastifyRequest,
   FastifyReply,
+  FastifyRequest,
 } from 'fastify'
 import fastifyJwt from '@fastify/jwt'
+import fp from 'fastify-plugin'
 
 async function authenticate(
   fastify: FastifyInstance,
@@ -23,4 +24,4 @@ async function authenticate(
   )
 }
 
-export default authenticate
+export default fp(authenticate)

@@ -1,8 +1,6 @@
-import errors from 'http-errors'
-import S from 'fluent-json-schema'
-import SQL from '@nearform/sql'
 import { Type, Static } from '@sinclair/typebox'
 import { FastifyInstance, FastifyRequest } from 'fastify'
+import errors from 'http-errors'
 
 const BodySchema = Type.Object({
   username: Type.String(),
@@ -28,22 +26,13 @@ export default async function login(fastify: FastifyInstance) {
   fastify.post(
     '/login',
     { schema },
-    async (req: FastifyRequest<{ Body: BodySchema }>) => {
+    async (
+      req: FastifyRequest<{ Body: BodySchema }>,
+    ): Promise<ResponseSchema> => {
       const { username, password } = req.body
 
-      // sample auth check
       if (username !== password) {
-        throw errors.Unauthorized()
-      }
-
-      const {
-        rows: [user],
-      } = await fastify.pg.query(
-        SQL`SELECT id, username FROM users WHERE username = ${username}`,
-      )
-
-      if (!user) {
-        throw errors.Unauthorized()
+        throw new errors.Unauthorized()
       }
 
       return { token: fastify.jwt.sign({ username }) }

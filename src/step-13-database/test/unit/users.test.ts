@@ -9,7 +9,7 @@ function buildServer() {
   return fastify()
     .decorate('pg', { query: sinon.stub() })
     .decorate('authenticate', sinon.stub())
-    .register(import('../../routes/users/index.js'))
+    .register(import('../../routes/users.js'))
 }
 
 test('GET /', async t => {
