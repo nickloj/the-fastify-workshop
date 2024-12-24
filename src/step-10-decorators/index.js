@@ -19,6 +19,7 @@ function buildServer(config) {
 
   fastify.register(import('./routes/login.js'))
   fastify.register(import('./routes/users.js'))
+  fastify.register(import('./routes/user/index.js'))
 
   fastify.log.info('Fastify is starting up!')
 

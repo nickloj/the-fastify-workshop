@@ -15,9 +15,7 @@ function buildServer(config) {
 
   const fastify = Fastify(opts)
 
-  fastify.register(import('@fastify/jwt'), {
-    secret: opts.JWT_SECRET,
-  })
+  fastify.register(import('./plugins/authenticate.js'), opts)
   fastify.register(import('./routes/login.js'))
   fastify.register(import('./routes/users.js'))
 

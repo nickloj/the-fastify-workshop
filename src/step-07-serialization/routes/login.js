@@ -1,13 +1,12 @@
 import S from 'fluent-json-schema'
+import errors from 'http-errors'
 
 const schema = {
   body: S.object()
     .prop('username', S.string().required())
     .prop('password', S.string().required()),
   response: {
-    200: S.object()
-      .prop('username', S.string().required())
-      .prop('password', S.string().required()),
+    200: S.object().prop('token', S.string().required()),
   },
 }
 
@@ -21,9 +20,12 @@ export default async function login(fastify) {
     /**
      * @type {import('fastify').RouteHandler<{ Body: { username: string; password: string } }>}
      * */
-    async req => {
+    async (req, res) => {
       const { username, password } = req.body
-      return { username, password }
+      if (username !== password) {
+        throw errors.Unauthorized()
+      }
+      return { token: fastify.jwt.sign({ username }) }
     },
   )
 }

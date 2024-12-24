@@ -1,12 +1,8 @@
-import Fastify from 'fastify'
+import buildFastify from './index.js'
+
+const fastify = buildFastify()
 
 const start = async function () {
-  const fastify = Fastify()
-
-  fastify.get('/', async () => {
-    return { hello: 'world' }
-  })
-
   try {
     await fastify.listen({ port: 3000 })
   } catch (err) {

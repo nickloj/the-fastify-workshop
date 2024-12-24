@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 
-function buildServer() {
+function buildServer(config) {
   const fastify = Fastify({
     logger: {
       transport: {
@@ -10,7 +10,7 @@ function buildServer() {
   })
 
   fastify.register(import('@fastify/jwt'), {
-    secret: 'supersecret',
+    secret: config.JWT_SECRET,
   })
   fastify.register(import('./routes/login.js'))
   fastify.register(import('./routes/users.js'))
